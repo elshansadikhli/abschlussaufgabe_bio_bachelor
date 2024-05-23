@@ -3,10 +3,11 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from collections import Counter
+import datei2 as dt2
+import matplotlib.pyplot as plt
+import numpy as np
 
 class FASTAseq:
-    
-    
     with open('config.txt', 'r') as file:
         for line in file.readlines():
             if "fna" in line:
@@ -31,7 +32,6 @@ class FASTAseq:
         #Creating new Multifasta
         seq_wf_dict = {}
         if self.path_gff3 != None:
-            import datei2 as dt2
             gff3file = dt2.GFF3seq ()
             feat_dict = gff3file.creator_gff3 ()
             for k,v in feat_dict.items():
@@ -84,6 +84,22 @@ class FASTAseq:
             all_cod_alanizer_dict.update({keys : str(str(vals)+" "+str(all_codshare)+"%")})
         return st_cod_analiser_dict, all_cod_alanizer_dict
     
+    def visualiser():
+        plt.style.use('_mpl-gallery')
+
+        # make data:
+        x = 0.5 + np.arange(8)
+        y = [4.8, 5.5, 3.5, 4.6, 6.5, 6.6, 2.6, 3.0]
+
+        # plot
+        fig, ax = plt.subplots()
+
+        ax.bar(x, y, width=1, edgecolor="white", linewidth=0.7)
+
+        ax.set(xlim=(0, 8), xticks=np.arange(1, 8),
+            ylim=(0, 8), yticks=np.arange(1, 8))
+
+        plt.show()
 
         
 

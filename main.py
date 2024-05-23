@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import argparse
 
+
+
+
 def main():
     #ArgParser
     parser = argparse.ArgumentParser(description="Save the file path and run the reader script.")
@@ -79,6 +82,8 @@ def main():
             if len(k) == 3:
                 print ("Codone: ", k, "Count: ", v)
         #print (seq_w_feat)
+
+            
 
 if __name__ == "__main__":
     main()

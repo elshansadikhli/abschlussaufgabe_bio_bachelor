@@ -1,0 +1,2 @@
+path_fna=sample_genomes\GCF_000007145.1.fna
+path_gff3=sample_genomes\GCF_000007145.1.gff3
