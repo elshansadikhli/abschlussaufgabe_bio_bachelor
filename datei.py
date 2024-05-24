@@ -107,7 +107,7 @@ class FASTAseq:
         for v in all_visual_dict.values():
             all_ylist.append(int(v.split(" ")[0]))
         y_all = all_ylist
-        ax.barh(x_all, y_all, width=1, edgecolor="white", linewidth=0.7)
+        ax.bar(x_all, y_all, width=1, edgecolor="white", linewidth=0.7)
         plt.xticks(rotation=90)
         plt.show()
 
