@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 import argparse
+import datei as dt
+import datei2 as dt2
+
 
 
 
@@ -34,10 +37,6 @@ def main():
         print ("No GFF3 file provided")
     path_gff3 = str(path_gff3).strip()
     path_gff3 = path_gff3.strip("[']")
-    
-
-    #print ("FASTA Path Main: ", path_fna)
-    #print ("GFF3 Path Main:", path_gff3)
 
     #Path saver
     with open('config.txt', 'w') as file:
@@ -45,8 +44,6 @@ def main():
         file.write(f'path_gff3={path_gff3}\n')
     
     #main stuff
-    if "gff3" in path_gff3:
-        import datei2 as dt2
         gff3file = dt2.GFF3seq()
         featcount = gff3file.featcounting()
         print ("Features:")
@@ -63,16 +60,11 @@ def main():
         csv_maker = gff3file.csv_creator()
         print (csv_maker)
         
-    
-    
-    
-    
-    if "fna" in path_fna:
-        import datei as dt
+
         fnafile = dt.FASTAseq()
         seq_w_feat = fnafile.creator_fasta()
         
-        start_cod_dict, all_cod_dict = fnafile.start_codone_usage()
+        start_cod_dict, all_cod_dict = fnafile.codone_usage()
         print ("Codone Usage Analysis:")
         print ("Start Codone Usage Analysis:")
         for k,v in start_cod_dict.items():
@@ -81,8 +73,10 @@ def main():
         for k,v in all_cod_dict.items():
             if len(k) == 3:
                 print ("Codone: ", k, "Count: ", v)
+        plot = fnafile.visualiser_codones()
         #print (seq_w_feat)
         #test gitlab change
+        
 
             
 

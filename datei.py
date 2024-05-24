@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#%matplotlib ipympl
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
@@ -59,11 +60,11 @@ class FASTAseq:
             SeqIO.write(aminolist, output_file_amino, "fasta")
         return seq_wf_dict
     
-    def start_codone_usage(self):
+    def codone_usage(self):
         seq_wf_dict = FASTAseq.creator_fasta(self)
         list_of_startcods = []
-        st_cod_analiser_dict = {}
-        all_cod_alanizer_dict = {}
+        st_cod_analyzer_dict = {}
+        all_cod_alanyzer_dict = {}
         for v in seq_wf_dict.values():
             startcodons = str(v)[:3]
             list_of_startcods.append(startcodons)
@@ -73,7 +74,7 @@ class FASTAseq:
             sum_st_cods = sum_st_cods + int(val)
         for keys, vals in st_cod_count_dict.items():
             st_codshare = round((vals / sum_st_cods) * 100, 2)
-            st_cod_analiser_dict.update({keys : str(str(vals)+" "+str(st_codshare)+"%")})
+            st_cod_analyzer_dict.update({keys : str(str(vals)+" "+str(st_codshare)+"%")})
         all_cod_usage = [self.full_sequence[i:i + 3] for i in range(0, len(self.full_sequence), 3)]
         all_cod_count_dict = dict(Counter(all_cod_usage))
         sumallcods = 0
@@ -81,25 +82,35 @@ class FASTAseq:
             sumallcods = sumallcods + int(val)
         for keys, vals in all_cod_count_dict.items():
             all_codshare = round((vals / sumallcods)*100, 2)
-            all_cod_alanizer_dict.update({keys : str(str(vals)+" "+str(all_codshare)+"%")})
-        return st_cod_analiser_dict, all_cod_alanizer_dict
+            all_cod_alanyzer_dict.update({keys : str(str(vals)+" "+str(all_codshare)+"%")})
+        return st_cod_analyzer_dict, all_cod_alanyzer_dict
     
-    def visualiser():
-        plt.style.use('_mpl-gallery')
+    def visualiser_codones(self):
 
-        # make data:
-        x = 0.5 + np.arange(8)
-        y = [4.8, 5.5, 3.5, 4.6, 6.5, 6.6, 2.6, 3.0]
+        #start codones(st):
+        start_visual_dict, all_visual_dict = FASTAseq.codone_usage(self)
+        st_ylist = []
 
-        # plot
+        x_st = list(start_visual_dict.keys())
+        for v in start_visual_dict.values():
+            st_ylist.append(int(v.split(" ")[0]))
+        y_st = st_ylist
+
         fig, ax = plt.subplots()
+        ax.bar(x_st, y_st, width=1, edgecolor="white", linewidth=0.7)
 
-        ax.bar(x, y, width=1, edgecolor="white", linewidth=0.7)
-
-        ax.set(xlim=(0, 8), xticks=np.arange(1, 8),
-            ylim=(0, 8), yticks=np.arange(1, 8))
-
+        #plt.show()
+        
+        #allcodones(all):
+        x_all = list(all_visual_dict.keys())
+        all_ylist = []
+        for v in all_visual_dict.values():
+            all_ylist.append(int(v.split(" ")[0]))
+        y_all = all_ylist
+        ax.barh(x_all, y_all, width=1, edgecolor="white", linewidth=0.7)
+        plt.xticks(rotation=90)
         plt.show()
+
 
         
 
